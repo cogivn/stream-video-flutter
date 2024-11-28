@@ -279,6 +279,13 @@ class OwnUserResponse {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
+      // Quick cheat: unread_count is empty on json structure.
+      // Waiting for GetStream team feedback.
+      // https://github.com/GetStream/stream-video-flutter/issues/798
+      if(!json.containsKey('unread_count')) {
+        json['unread_count'] = 0;
+      }
+
       // Ensure that the map contains the required keys.
       // Note 1: the values aren't checked for validity beyond being non-null.
       // Note 2: this code is stripped in release mode!
